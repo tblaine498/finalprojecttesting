@@ -2,7 +2,7 @@ package src;
 
 public class Creator1 extends Creator {
     @Override
-    public GameObject createObject() {
+    public Obstacle createObject() {
         return null;
     }
 }

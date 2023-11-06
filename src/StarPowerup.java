@@ -1,5 +1,6 @@
 package src;
 
-public class StarPowerup implements Obstacle {
-
+public class StarPowerup extends Entity {
+    public StarPowerup() {
+    }
 }

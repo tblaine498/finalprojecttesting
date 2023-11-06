@@ -1,5 +1,15 @@
 package src;
 
-public abstract class Creator {
-    public abstract Obstacle createObject();
+/**
+ *
+ */
+public interface Creator {
+    /**
+     * Establishes the method for creating an Entity object
+     * @return An object of type Entity
+     */
+    Entity createObject();
 }
+
+
+

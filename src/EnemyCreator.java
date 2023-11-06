@@ -2,7 +2,7 @@ package src;
 
 public class EnemyCreator implements Creator {
     @Override
-    public Entity createObject() {
+    public Entity createEntity() {
         int randomNumber = (int) (Math.random()*20);
         Entity enemyEntity;
         if (randomNumber <= 12) {

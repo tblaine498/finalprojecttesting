@@ -10,10 +10,10 @@ public class Road {
             objectCreator = new EnemyCreator();
         }
 
+        Entity newEntity = objectCreator.createObject();
 
 
-
-        objectCreator.toString();
+        newEntity.toString(); //don't put this in code snippet
     }
 
 }

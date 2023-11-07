@@ -1,7 +1,8 @@
 package src;
 
-public class Road {
-    public void run() {
+public class EntityBuilder {
+    public static Entity buildRandomEntity() {
+
         Creator objectCreator;
         int random = (int) (Math.random() * 10);
         if (random==1) {
@@ -11,9 +12,9 @@ public class Road {
         }
 
         Entity newEntity = objectCreator.createEntity();
+        return newEntity;
 
-
-        newEntity.toString(); //don't put this in code snippet
+//        newEntity.toString(); //don't put this in code snippet
     }
 
 }

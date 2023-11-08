@@ -1,4 +1,4 @@
-package src;
+package src.game;
 
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;

@@ -1,4 +1,4 @@
-package src;
+package src.game;
 
 public class EnemyCreator implements Creator {
     @Override
@@ -7,7 +7,7 @@ public class EnemyCreator implements Creator {
         Entity enemyEntity;
         if (randomNumber <= 12) {
             enemyEntity = new BasicZombie();
-        } else if (randomNumber <= 19) {
+        } else if (randomNumber < 19) {
             enemyEntity = new LazerZombie();
         } else {
             enemyEntity = new BossZombie();

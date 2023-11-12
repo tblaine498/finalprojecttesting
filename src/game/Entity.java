@@ -9,7 +9,10 @@ public abstract class Entity {
     private int health;
 
     private Point2D location;
-    /** Time between calls to step() (ms)*/
+
+    /**
+     * Time between calls to step() (ms)
+     * */
     public static final double MILLISECONDS_PER_STEP = 1000. / 30;
     public Entity(int health) {
         this.health = health;

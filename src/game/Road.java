@@ -1,8 +1,21 @@
 package src.game;
 
-public class Road {
-    public void run() {
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 
+public class Road {
+    @FXML
+    public Pane road;
+
+    Player player;
+
+
+
+    public void run() {
+        Player player = new Player(this, road);
         //code for managing Player object here
 
         Creator entityCreator;
@@ -17,7 +30,24 @@ public class Road {
 
         //code for exploring interaction between Entity and Player here
 
-        newEntity.toString(); //don't put this in code snippet
+
     }
 
+
+    @FXML
+    public void onKeyPress(KeyEvent keyEvent) {
+        if(keyEvent.getCode() == KeyCode.RIGHT || keyEvent.getCode() == KeyCode.LEFT) {
+            player.move(keyEvent);
+        } else if (keyEvent.getCode() == KeyCode.R) {
+            restart();
+        }
+    }
+
+    public void restart() {
+
+    }
+
+    public void addNodeToRoad(Node node) {
+
+    }
 }

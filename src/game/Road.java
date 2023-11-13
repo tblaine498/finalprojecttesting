@@ -1,5 +1,7 @@
 package src.game;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
@@ -8,14 +10,14 @@ import javafx.scene.layout.Pane;
 
 public class Road {
     @FXML
-    public Pane road;
+    public Pane theRoad;
+
 
     Player player;
 
-
-
-    public void run() {
-        Player player = new Player(this, road);
+    @FXML
+    public void initialize() {
+        Player player = new Player(this, theRoad);
         //code for managing Player object here
 
         Creator entityCreator;
@@ -28,16 +30,16 @@ public class Road {
 
         Entity newEntity = entityCreator.createEntity();
 
-        //code for exploring interaction between Entity and Player here
-
-
+        theRoad.setFocusTraversable(true);
     }
 
 
     @FXML
-    public void onKeyPress(KeyEvent keyEvent) {
-        if(keyEvent.getCode() == KeyCode.RIGHT || keyEvent.getCode() == KeyCode.LEFT) {
-            player.move(keyEvent);
+    public void onKeyPressed(KeyEvent keyEvent) {
+        if(keyEvent.getCode() == KeyCode.RIGHT) {
+            player.moveRight();
+        } else if (keyEvent.getCode() == KeyCode.LEFT) {
+            player.moveLeft();
         } else if (keyEvent.getCode() == KeyCode.R) {
             restart();
         }
@@ -48,6 +50,6 @@ public class Road {
     }
 
     public void addNodeToRoad(Node node) {
-
+        theRoad.getChildren().addAll(node);
     }
 }

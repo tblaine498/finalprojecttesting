@@ -11,13 +11,11 @@ import javafx.scene.layout.Pane;
 public class Road {
     @FXML
     public Pane theRoad;
-
-
     Player player;
 
     @FXML
     public void initialize() {
-        Player player = new Player(this, theRoad);
+        player = new Player(this, theRoad);
         //code for managing Player object here
 
         Creator entityCreator;
@@ -33,23 +31,19 @@ public class Road {
         theRoad.setFocusTraversable(true);
     }
 
-
-    @FXML
-    public void onKeyPressed(KeyEvent keyEvent) {
-        if(keyEvent.getCode() == KeyCode.RIGHT) {
-            player.moveRight();
-        } else if (keyEvent.getCode() == KeyCode.LEFT) {
-            player.moveLeft();
-        } else if (keyEvent.getCode() == KeyCode.R) {
-            restart();
-        }
-    }
-
     public void restart() {
 
     }
 
     public void addNodeToRoad(Node node) {
         theRoad.getChildren().addAll(node);
+    }
+
+    public void onKeyPressed(KeyEvent keyEvent) {
+        if(keyEvent.getCode() == KeyCode.RIGHT) {
+            player.moveRight();
+        } else if (keyEvent.getCode() == KeyCode.LEFT) {
+            player.moveLeft();
+        }
     }
 }

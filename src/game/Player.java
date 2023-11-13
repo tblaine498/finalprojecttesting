@@ -15,15 +15,19 @@ public class Player {
     private int lives = 3;
     private Point2D location;
 
-    private Pane roadPane;
 
     private ImageView imageView;
 
+    private static final int HEIGHT = 200;
+    private static final int WIDTH = 200;
+    private Road road;
+
     public Player(Road road, Pane roadPane) {
-        this.roadPane = roadPane;
-        imageView = new ImageView(new Image("@../../src/objectImages/RandomLazerShooter.jpg"));       //why like this?
-        imageView.setFitHeight(100);
-        imageView.setFitWidth(100);
+        this.road = road;
+//        imageView = new ImageView(new Image("@../../src/objectImages/RandomLazerShooter.jpg"));       //why like this?
+        imageView = new ImageView(new Image("@../../src/objectImages/car.png"));
+        imageView.setFitHeight(HEIGHT);
+        imageView.setFitWidth(WIDTH);
 
         location = new Point2D(roadPane.getPrefWidth()/2, roadPane.getPrefHeight()-100);
         imageView.relocate(roadPane.getPrefWidth()/2, roadPane.getPrefHeight()-100);
@@ -31,18 +35,17 @@ public class Player {
     }
 
     public void moveLeft() {
-        if (!(location.getX() <= 10)) {
-            location.add(new Point2D(5, 0));
+        if(location.getX() > WIDTH/6){
+            location = new Point2D(location.getX() - 10, location.getY());
             setPosition();
         }
     }
 
     public void moveRight() {
-        if (!(location.getX() >= roadPane.getPrefWidth()-100)) {
-            location.add(new Point2D(5, 0));
+        if(location.getX() < (road.theRoad.getWidth()- WIDTH/6)) {
+            location = new Point2D(location.getX() + 10, location.getY());
             setPosition();
         }
-        //change location, but check bounds
     }
 
     private void setPosition() {

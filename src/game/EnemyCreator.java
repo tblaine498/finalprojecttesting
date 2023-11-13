@@ -1,17 +1,17 @@
 package src.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EnemyCreator implements Creator {
+    private List<Entity> list = new ArrayList<>();
+    public EnemyCreator(){
+        list.add(new BasicZombie());
+        list.add(new LazerZombie());
+        list.add(new BossZombie());
+    }
     @Override
     public Entity createEntity() {
-        int randomNumber = (int) (Math.random()*20);
-        Entity enemyEntity;
-        if (randomNumber <= 12) {
-            enemyEntity = new BasicZombie();
-        } else if (randomNumber < 19) {
-            enemyEntity = new LazerZombie();
-        } else {
-            enemyEntity = new BossZombie();
-        }
-        return enemyEntity;
+        return null;
     }
 }

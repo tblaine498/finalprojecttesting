@@ -9,14 +9,11 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("scene.fxml"));
-        Parent root = loader.load();
+        Parent root = FXMLLoader.load(getClass().getResource("game-road.fxml"));
         stage.setTitle("Game");
         stage.setScene(new Scene(root));
         stage.setResizable(false);
         stage.show();
-        
     }
 
 }

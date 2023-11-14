@@ -27,20 +27,19 @@ public class Road {
 
     public static final int ROAD_WIDTH_HEIGHT = 600;
 
+    private Creator[] creators = {new PowerupCreator(), new EnemyCreator()};
+
     @FXML
     public void initialize() {
         player = new Player(this, theRoad);
         //code for managing Player object here
 
 
-
-        Timeline timeline2 = new Timeline(new KeyFrame(Duration.millis(1000),(e)->{
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000),(e)->{
             createNewEntity();
-
         }));
-        timeline2.setCycleCount(Timeline.INDEFINITE);
-        timeline2.play();
-
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
 
         theRoad.setFocusTraversable(true);
     }
@@ -49,9 +48,9 @@ public class Road {
         Creator entityCreator;
         int random = (int) (Math.random() * 10);
         if (random != 1) {
-            entityCreator = new EnemyCreator();
+            entityCreator = creators[0];
         } else {
-            entityCreator = new PowerupCreator();
+            entityCreator = creators[1];
         }
 
         Entity newEntity = entityCreator.createEntity();
@@ -81,12 +80,14 @@ public class Road {
     public void removeNodeFromRoad(ImageView bullet) {
     }
 
+    @FXML
     public void shoot(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.UP) {
             player.shoot();
         }
     }
 
+    @FXML
     public void move(MouseEvent mouseEvent) {
         player.move(mouseEvent);
     }

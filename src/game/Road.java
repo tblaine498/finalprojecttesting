@@ -1,37 +1,63 @@
 package src.game;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Road {
     @FXML
     public Pane theRoad;
     Player player;
 
+    private List<Entity> aliveEntities = new ArrayList<>();
+
+    public static final int ROAD_WIDTH_HEIGHT = 600;
+
     @FXML
     public void initialize() {
         player = new Player(this, theRoad);
         //code for managing Player object here
 
+
+
+        Timeline timeline2 = new Timeline(new KeyFrame(Duration.millis(1000),(e)->{
+            createNewEntity();
+
+        }));
+        timeline2.setCycleCount(Timeline.INDEFINITE);
+        timeline2.play();
+
+
+        theRoad.setFocusTraversable(true);
+    }
+
+    public void createNewEntity() {
         Creator entityCreator;
         int random = (int) (Math.random() * 10);
-        if (random!=1) {
+        if (random != 1) {
             entityCreator = new EnemyCreator();
         } else {
             entityCreator = new PowerupCreator();
         }
 
         Entity newEntity = entityCreator.createEntity();
-
-        theRoad.setFocusTraversable(true);
+        ImageView imageView = newEntity.getImageView();
+        addNodeToRoad(imageView);
+        aliveEntities.add(newEntity);
     }
 
     public void restart() {

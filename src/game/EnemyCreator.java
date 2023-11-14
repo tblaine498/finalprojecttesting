@@ -12,6 +12,6 @@ public class EnemyCreator implements Creator {
     }
     @Override
     public Entity createEntity() {
-        return null;
+        return new BasicZombie();
     }
 }

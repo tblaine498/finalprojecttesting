@@ -10,7 +10,7 @@ import javafx.util.Duration;
 public abstract class Entity {
     private int health;
 
-    private Point2D location;
+    private Point2D location = new Point2D(0, 0);
 
     private ImageView imageView;
 
@@ -23,14 +23,18 @@ public abstract class Entity {
 
         //randomize the x value of the starting location of the Entity, keep the y value consistent
         //location = new Point2D(x_location, y_location)
+
+        int testing = (int) (Math.random() * Road.ROAD_WIDTH_HEIGHT);
+        location = new Point2D(testing, 50);
+
         imageView = new ImageView(new Image("@../../src/objectImages/BasicZombie.jpg"));       //why like this?
         imageView.setFitHeight(50);
         imageView.setFitWidth(50);
+        imageView.relocate(testing, 50);
 
-
-//        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(MILLISECONDS_PER_STEP), e-> step()));
-//        timeline.setCycleCount(Timeline.INDEFINITE);
-//        timeline.play();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(MILLISECONDS_PER_STEP), e-> step()));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 
     public ImageView getImageView() {
@@ -38,21 +42,22 @@ public abstract class Entity {
     }
 
     public void setLocation(Point2D location) {
-        location = location;
+        this.location = location;
 
     }
+
     public int getHealth() {
         return health;
     }
 
     public void step() {
-        location.add(new Point2D(0, 10));
+        location = location.add(new Point2D(0, 5));
         setPosition();
     }
 
     private void setPosition() {        //change corner name?
-        double iconCornerX = location.getX() - imageView.boundsInParentProperty().get().getWidth()/2;
-        double iconCornerY = location.getY() - imageView.boundsInParentProperty().get().getHeight()/2;
+        double iconCornerX = location.getX();
+        double iconCornerY = location.getY();
         imageView.relocate(iconCornerX, iconCornerY);
     }
 

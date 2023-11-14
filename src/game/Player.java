@@ -40,7 +40,6 @@ public class Player {
         hbox.setLayoutX(75);
         hbox.setLayoutY(7);
         road.addNodeToRoad(hbox);
-
     }
 
     public void hit(){

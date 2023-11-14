@@ -18,7 +18,7 @@ public abstract class Entity {
      * Time between calls to step() (ms)
      * */
     public static final double MILLISECONDS_PER_STEP = 1000. / 30;
-    public Entity(int health) {     //pass in image as attribute, then create ImageView and show it in this class
+    public Entity(int health, String s, int size) {     //pass in image as attribute, then create ImageView and show it in this class
         this.health = health;
 
         //randomize the x value of the starting location of the Entity, keep the y value consistent
@@ -27,9 +27,9 @@ public abstract class Entity {
         int testing = (int) (Math.random() * Road.ROAD_WIDTH_HEIGHT);
         location = new Point2D(testing, 50);
 
-        imageView = new ImageView(new Image("@../../src/objectImages/BasicZombie.jpg"));       //why like this?
-        imageView.setFitHeight(50);
-        imageView.setFitWidth(50);
+        imageView = new ImageView(new Image(s));
+        imageView.setFitHeight(size);
+        imageView.setFitWidth(size);
         imageView.relocate(testing, 50);
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(MILLISECONDS_PER_STEP), e-> step()));

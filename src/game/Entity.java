@@ -25,14 +25,19 @@ public abstract class Entity {
         //location = new Point2D(x_location, y_location)
 
         int testing = (int) (Math.random() * Road.ROAD_WIDTH_HEIGHT);
-        location = new Point2D(testing, 50);
+        location = new Point2D(testing, -50);
 
         imageView = new ImageView(new Image(s));
         imageView.setFitHeight(size);
         imageView.setFitWidth(size);
         imageView.relocate(testing, 50);
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(MILLISECONDS_PER_STEP), e-> step()));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(MILLISECONDS_PER_STEP), e-> {
+            step();
+            if (location.getY() < Road.ROAD_WIDTH_HEIGHT) {
+                //remove from road
+            }
+        }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
@@ -61,5 +66,12 @@ public abstract class Entity {
         imageView.relocate(iconCornerX, iconCornerY);
     }
 
+    private boolean checkOutOfBounds() {        //remove zombies if they get too far (actually remove them in Road)
+        boolean outOfBounds = false;
+        if (location.getY() > Road.ROAD_WIDTH_HEIGHT) {
+            outOfBounds = true;
+        }
+        return outOfBounds;
+    }
 
 }

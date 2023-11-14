@@ -1,6 +1,5 @@
 package src.game;
 
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Point2D;
@@ -53,6 +52,7 @@ public class Player {
         double iconY = location.getY() - imageView.boundsInParentProperty().get().getHeight()/2;
         imageView.relocate(iconX, iconY);
     }
+
     public void move(MouseEvent mouseEvent){
         if(mouseEvent.getX() < road.theRoad.getWidth()- WIDTH/12){
             location = new Point2D(mouseEvent.getX(), location.getY());

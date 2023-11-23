@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnemyCreator implements Creator {
-    private List<Entity> list = new ArrayList<>();
+    private List<Entity> enemyList = new ArrayList<>();
     public EnemyCreator(){
-        list.add(new BasicZombie());
-        list.add(new LazerZombie());
-        list.add(new BossZombie());
+        enemyList.add(new BasicZombie());
+        enemyList.add(new LazerZombie());
+        enemyList.add(new BossZombie());
     }
     @Override
     public Entity createEntity() {

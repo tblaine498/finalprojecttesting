@@ -1,12 +1,8 @@
 package src.game;
 
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -21,25 +17,19 @@ import java.util.List;
 public class Road {
     @FXML
     public Pane theRoad;
-    Player player;
+    PlayerCar playerCar;
 
     private List<Entity> aliveEntities = new ArrayList<>();
 
     public static final int ROAD_WIDTH_HEIGHT = 600;
+    public static final int BULLET_HEALTH_AFFECT = 50;
 
-    private Creator[] creators = {new PowerupCreator(), new EnemyCreator()};
+    private Creator[] creators = {new EnemyCreator(), new PowerupCreator()};
 
     @FXML
     public void initialize() {
-        player = new Player(this, theRoad);
+        playerCar = new PlayerCar(this, theRoad);
         //code for managing Player object here
-
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000),(e)->{
-            createNewEntity();
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
 
         theRoad.setFocusTraversable(true);
     }
@@ -67,6 +57,26 @@ public class Road {
         theRoad.getChildren().addAll(node);
     }
 
+    public boolean checkBulletHitSomething(List<ImageView> bullets) {
+        List<Entity> entitiesToRemove = new ArrayList<>();
+        boolean bulletsHitSomething = false;
+        for (ImageView bullet : bullets) {
+            for (Entity entity : aliveEntities) {
+                if (entity.getEntityType().equals("Enemy") && Math.abs(bullet.getX()-entity.getLocation().getX()) < 20
+                        && Math.abs(bullet.getY()-entity.getLocation().getY()) < 20) {
+
+                    System.out.println("enemy hit"); //for testing (works)
+                    if (entity.reduceHealth(BULLET_HEALTH_AFFECT)) {
+                        entitiesToRemove.add(entity);
+                        bulletsHitSomething = true;
+                    }
+                }
+            }
+        }
+        theRoad.getChildren().removeAll(entitiesToRemove);
+        return bulletsHitSomething;
+    }
+
 //    public void onKeyPressed(KeyEvent keyEvent) {
 //        if(keyEvent.getCode() == KeyCode.RIGHT) {
 //            player.moveRight();
@@ -83,12 +93,18 @@ public class Road {
     @FXML
     public void shoot(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.UP) {
-            player.shoot();
+            playerCar.shoot();
         }
     }
 
     @FXML
     public void move(MouseEvent mouseEvent) {
-        player.move(mouseEvent);
+        playerCar.move(mouseEvent);
+    }
+
+    public void startCreatingEntities() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> createNewEntity()));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 }

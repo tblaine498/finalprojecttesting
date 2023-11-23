@@ -11,8 +11,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-public class Player {
+import java.util.ArrayList;
+import java.util.List;
 
+public class PlayerCar {
     private static final int HEIGHT = 200;
     private static final int WIDTH = 200;
     private final HBox hbox = new HBox();
@@ -21,7 +23,9 @@ public class Player {
     private ImageView imageView;
     private Road road;
 
-    public Player(Road road, Pane roadPane) {
+    private List<ImageView> bulletsList = new ArrayList<>();
+
+    public PlayerCar(Road road, Pane roadPane) {
         this.road = road;
         imageView = new ImageView(new Image("@../../src/objectImages/car.png"));
         imageView.setFitHeight(HEIGHT);
@@ -62,6 +66,7 @@ public class Player {
 
     public void shoot() {
         ImageView bullet = new ImageView(new Image("@../../src/objectImages/bullet.png"));
+        bulletsList.add(bullet);
         bullet.setX(location.getX());
         bullet.setY(location.getY() - 80);
         road.addNodeToRoad(bullet);
@@ -73,21 +78,27 @@ public class Player {
 
     }
 
+    public List<ImageView> getBulletsList() {
+        return bulletsList;
+    }
+
     private Timeline getTimeline(ImageView bullet, double bulletSpeed) {
         Duration duration = Duration.millis(16.7);
 
         return new Timeline(new KeyFrame(duration, event -> {
             bullet.setY(bullet.getY() - bulletSpeed);
 
-            if (bulletHitSomething(bullet)) {
+            if (road.checkBulletHitSomething(bulletsList)) {
                 road.removeNodeFromRoad(bullet);
             }
         }));
     }
 
     private boolean bulletHitSomething(ImageView bullet) {
+
         return false;
     }
+
 
 
 

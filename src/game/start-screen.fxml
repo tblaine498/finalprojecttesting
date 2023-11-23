@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.game.StartScreenController">
+   <children>
+      <Label layoutX="204.0" layoutY="73.0" prefHeight="112.0" prefWidth="197.0" text="Welcome to Zombie Apocalypse 1!&#10;(still need more details and design&#10;on this screen)" />
+      <Button fx:id="startButton" layoutX="274.0" layoutY="222.0" mnemonicParsing="false" text="Start!" />
+   </children>
+</AnchorPane>

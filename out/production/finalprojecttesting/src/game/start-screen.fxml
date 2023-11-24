@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.game.StartScreenController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: GAINSBORO;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.game.StartScreenController">
    <children>
-      <Label layoutX="204.0" layoutY="73.0" prefHeight="112.0" prefWidth="197.0" text="Welcome to Zombie Apocalypse 1!&#10;(still need more details and design&#10;on this screen)" />
-      <Button fx:id="startButton" layoutX="274.0" layoutY="222.0" mnemonicParsing="false" text="Start!" />
+      <Label layoutX="159.0" layoutY="53.0" prefHeight="55.0" prefWidth="295.0" text="Welcome to Zombie Apocalypse 1!&#10;" textAlignment="CENTER" textFill="#c92a2a">
+         <font>
+            <Font name="Gloucester MT Extra Condensed" size="30.0" />
+         </font></Label>
+      <Button fx:id="startButton" layoutX="251.0" layoutY="298.0" mnemonicParsing="false" text="Start the game!" />
+      <Label layoutX="203.0" layoutY="124.0" prefHeight="162.0" prefWidth="207.0" text="In this game, you control a car&#10;and try to fend off waves of zombies!&#10;Survive as long as possible!&#10;&#10;Controls: Move with your mouse and&#10;shoot with the up arrow." textAlignment="CENTER" textFill="#c92a2a">
+         <font>
+            <Font name="Gloucester MT Extra Condensed" size="20.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="179.0" fitWidth="121.0" layoutY="221.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../objectImages/BasicZombie.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="179.0" fitWidth="192.0" layoutX="427.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../objectImages/bossssssssssss_zombie.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

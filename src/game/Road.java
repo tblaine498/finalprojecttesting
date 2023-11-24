@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -17,9 +18,14 @@ import java.util.List;
 public class Road {
     @FXML
     public Pane theRoad;
+
+    @FXML
+    public Label score;
     private PlayerCar playerCar;
 
     private List<Entity> aliveEntities = new ArrayList<>();
+
+    private int scoreInt;
 
     /**
      * Width and height of road game-playing space
@@ -33,12 +39,16 @@ public class Road {
 
     private final Creator[] creators = {new EnemyCreator(), new PowerupCreator()};
 
+    private boolean gunCooldownActive = false;
+
+    private long timeBenchmark;
+
     @FXML
     public void initialize() {
         playerCar = new PlayerCar(this, theRoad);
-        //code for managing Player object here
-
+        scoreInt = 0;
         theRoad.setFocusTraversable(true);
+        timeBenchmark = System.currentTimeMillis();
     }
 
     public void createNewEntity() {
@@ -63,19 +73,20 @@ public class Road {
     public void checkBulletHitSomething(ImageView bullet, int bulletTimelineIndex, PlayerCar playerCar) {
         Entity entityToRemove = null;
         for (Entity entity : aliveEntities) {
-            if (entity.getEntityType().equals("Enemy") && Math.abs(bullet.getX()-entity.getLocation().getX()) < 20
-                    && Math.abs(bullet.getY()-entity.getLocation().getY()) < 20) {
+            if (entity.getEntityType().equals("Enemy") && Math.abs(bullet.getX()-entity.getLocation().getX()) < 25
+                    && Math.abs(bullet.getY()-entity.getLocation().getY()) < 25) {
                 theRoad.getChildren().removeAll(bullet);
                 playerCar.removeBullet(bulletTimelineIndex);
+
+                scoreInt += 50;
+                score.setText("Score: " + scoreInt);
 
                 if (entity.reduceHealth(BULLET_HEALTH_AFFECT)) {
                     entityToRemove = entity;
                 }
-                System.out.println(entity.getHealth());
             }
         }
         if (entityToRemove!=null) {
-            System.out.println("hi");
             removeEntityFromRoad(entityToRemove);
         }
     }
@@ -98,7 +109,11 @@ public class Road {
     @FXML
     public void shoot(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.UP) {
-            playerCar.shoot();
+            long timeNow = System.currentTimeMillis();
+            if (timeNow-timeBenchmark >= 250) {
+                playerCar.shoot();
+                timeBenchmark = timeNow;
+            }
         }
     }
 

@@ -23,7 +23,7 @@ public class PlayerCar {
     private ImageView imageView;
     private Road road;
 
-    private List<ImageView> bulletsList = new ArrayList<>();
+    private List<Timeline> bulletTimelineList = new ArrayList<>();
 
     public PlayerCar(Road road, Pane roadPane) {
         this.road = road;
@@ -64,42 +64,35 @@ public class PlayerCar {
         }
     }
 
+    public void removeBullet(int bulletTimelineIndex) {
+        bulletTimelineList.get(bulletTimelineIndex).stop();
+    }
+
     public void shoot() {
         ImageView bullet = new ImageView(new Image("@../../src/objectImages/bullet.png"));
-        bulletsList.add(bullet);
         bullet.setX(location.getX());
         bullet.setY(location.getY() - 80);
         road.addNodeToRoad(bullet);
 
         double bulletSpeed = 5.0;
-        Timeline timeline = getTimeline(bullet, bulletSpeed);
+        int bulletTimelineIndex = bulletTimelineList.size();
+        Timeline timeline = getTimeline(bullet, bulletSpeed, bulletTimelineIndex);
+        bulletTimelineList.add(timeline);
+
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
     }
 
-    public List<ImageView> getBulletsList() {
-        return bulletsList;
-    }
-
-    private Timeline getTimeline(ImageView bullet, double bulletSpeed) {
+    private Timeline getTimeline(ImageView bullet, double bulletSpeed, int bulletIndex) {
         Duration duration = Duration.millis(16.7);
 
+        boolean testing = false;
         return new Timeline(new KeyFrame(duration, event -> {
             bullet.setY(bullet.getY() - bulletSpeed);
-
-            if (road.checkBulletHitSomething(bulletsList)) {
-                road.removeBulletFromRoad(bullet);
-            }
+            road.checkBulletHitSomething(bullet, bulletIndex, this);
         }));
     }
-
-    private boolean bulletHitSomething(ImageView bullet) {
-
-        return false;
-    }
-
-
 
 
     //    public void moveLeft() {

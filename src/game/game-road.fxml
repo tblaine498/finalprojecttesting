@@ -21,7 +21,10 @@
    <children>
       <Pane fx:id="theRoad" onKeyPressed="#shoot" onMouseMoved="#move" prefHeight="600.0" prefWidth="600.0">
          <children>
-            <ImageView fitHeight="600.0" fitWidth="600.0" layoutX="1.0" layoutY="-2.0" />
+            <ImageView fitHeight="600.0" fitWidth="600.0" layoutX="1.0" layoutY="-2.0">
+               <image>
+                  <Image url="@../objectImages/road2.0.gif" />
+               </image></ImageView>
             <Label prefHeight="42.0" prefWidth="66.0" text="Lives" textFill="#ce0000">
                <font>
                   <Font name="Gill Sans Ultra Bold" size="18.0" />
@@ -40,7 +43,7 @@
          <children>
             <Label layoutX="93.0" layoutY="41.0" text="Basic Zombie&#10;100 HP">
                <font>
-                  <Font size="17.0" />
+                  <Font name="Gill Sans MT" size="17.0" />
                </font></Label>
             <Label layoutX="94.0" layoutY="148.0" text="Boss Zombie&#10;300 HP">
                <font>

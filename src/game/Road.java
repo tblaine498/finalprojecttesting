@@ -43,7 +43,7 @@ public class Road {
             entityCreator = creators[1];
         }
 
-        Entity newEntity = entityCreator.createEntity();
+        Entity newEntity = entityCreator.createEntity(this);
         ImageView imageView = newEntity.getImageView();
         addNodeToRoad(imageView);
         aliveEntities.add(newEntity);
@@ -65,7 +65,7 @@ public class Road {
                 if (entity.getEntityType().equals("Enemy") && Math.abs(bullet.getX()-entity.getLocation().getX()) < 20
                         && Math.abs(bullet.getY()-entity.getLocation().getY()) < 20) {
 
-                    System.out.println("enemy hit"); //for testing (works)
+                    System.out.println("enemy hit");
                     if (entity.reduceHealth(BULLET_HEALTH_AFFECT)) {
                         entitiesToRemove.add(entity);
                         bulletsHitSomething = true;
@@ -73,7 +73,10 @@ public class Road {
                 }
             }
         }
-        theRoad.getChildren().removeAll(entitiesToRemove);
+
+        for (Entity entity : entitiesToRemove) {
+            removeEntityFromRoad(entity);
+        }
         return bulletsHitSomething;
     }
 
@@ -87,7 +90,13 @@ public class Road {
 //        }
 //    }
 
-    public void removeNodeFromRoad(ImageView bullet) {
+    public void removeEntityFromRoad(Entity entity) {
+        aliveEntities.remove(entity);
+        theRoad.getChildren().removeAll(entity.getImageView());
+    }
+
+    public void removeBulletFromRoad(Node node) {
+        theRoad.getChildren().removeAll(node);
     }
 
     @FXML

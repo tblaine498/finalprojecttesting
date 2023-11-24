@@ -4,7 +4,7 @@ package src.game;
  *
  */
 public interface Creator {
-    Entity createEntity();
+    Entity createEntity(Road road);
 }
 
 

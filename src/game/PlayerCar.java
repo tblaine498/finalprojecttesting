@@ -89,7 +89,7 @@ public class PlayerCar {
             bullet.setY(bullet.getY() - bulletSpeed);
 
             if (road.checkBulletHitSomething(bulletsList)) {
-                road.removeNodeFromRoad(bullet);
+                road.removeBulletFromRoad(bullet);
             }
         }));
     }

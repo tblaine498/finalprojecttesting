@@ -20,7 +20,7 @@ public abstract class Entity {
      * Time between calls to step() (ms)
      * */
     public static final double MILLISECONDS_PER_STEP = 1000. / 30;
-    public Entity(int health, String s, int size, String entityType) {     //pass in image as attribute, then create ImageView and show it in this class
+    public Entity(int health, String s, int size, String entityType, Road road) {     //pass in image as attribute, then create ImageView and show it in this class
         this.health = health;
         this.entityType = entityType;
 
@@ -37,9 +37,8 @@ public abstract class Entity {
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(MILLISECONDS_PER_STEP), e-> {
             step();
-            checkOutOfBounds();
-            if (location.getY() < Road.ROAD_WIDTH_HEIGHT) {
-                //remove from road
+            if (checkOutOfBounds()) {
+                road.removeEntityFromRoad(this);
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);

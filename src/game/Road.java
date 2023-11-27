@@ -18,14 +18,20 @@ import java.util.List;
 public class Road {
     @FXML
     public Pane theRoad;
-
     @FXML
     public Label score;
+    @FXML
+    public Label gameOverLabel;
+    @FXML
+    public Label finalScore;
     private PlayerCar playerCar;
-
     private List<Entity> aliveEntities = new ArrayList<>();
-
+    private List<Entity> taggedEntities = new ArrayList<>();
     private int scoreInt;
+    /**
+     * Time between calls to step() (ms)
+     * */
+    private static final double MILLISECONDS_PER_STEP = 1000. / 30;
 
     /**
      * Width and height of road game-playing space
@@ -64,6 +70,33 @@ public class Road {
         ImageView imageView = newEntity.getImageView();
         addNodeToRoad(imageView);
         aliveEntities.add(newEntity);
+        taggedEntities.add(newEntity);
+
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(MILLISECONDS_PER_STEP), e-> {
+            newEntity.step();
+            for (int i = taggedEntities.size()-1; i >= 0; i--) {
+                if (taggedEntities.get(i).getEntityType().equals("Enemy") &&
+                        Math.abs(playerCar.getLocation().getX() - taggedEntities.get(i).getLocation().getX()) < 50 &&
+                        Math.abs(playerCar.getLocation().getY() - taggedEntities.get(i).getLocation().getY()) < 50) {
+                    playerCar.hit();
+                    taggedEntities.remove(taggedEntities.get(i));
+
+                    if (playerCar.getLives() == 0) {
+                        theRoad.getChildren().removeAll(playerCar.getImageView());
+                        timeline.stop();
+                        gameOverLabel.setVisible(true);
+                        finalScore.setText(String.valueOf(scoreInt));
+
+                    }
+                }
+            }
+            if (newEntity.checkOutOfBounds()) {
+                this.removeEntityFromRoad(newEntity);
+            }
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 
     public void addNodeToRoad(Node node) {
@@ -91,18 +124,9 @@ public class Road {
         }
     }
 
-//    public void onKeyPressed(KeyEvent keyEvent) {
-//        if(keyEvent.getCode() == KeyCode.RIGHT) {
-//            player.moveRight();
-//        } else if (keyEvent.getCode() == KeyCode.LEFT) {
-//            player.moveLeft();
-//        } else if (keyEvent.getCode() == KeyCode.SPACE) {
-//            player.shoot();
-//        }
-//    }
-
     public void removeEntityFromRoad(Entity entity) {
         aliveEntities.remove(entity);
+        taggedEntities.remove(entity);
         theRoad.getChildren().removeAll(entity.getImageView());
     }
 

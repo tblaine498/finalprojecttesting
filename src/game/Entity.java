@@ -16,10 +16,6 @@ public abstract class Entity {
     
     private String entityType;
 
-    /**
-     * Time between calls to step() (ms)
-     * */
-    public static final double MILLISECONDS_PER_STEP = 1000. / 30;
     public Entity(int health, String s, int size, String entityType, Road road) {     //pass in image as attribute, then create ImageView and show it in this class
         this.health = health;
         this.entityType = entityType;
@@ -34,15 +30,6 @@ public abstract class Entity {
         imageView.setFitHeight(size);
         imageView.setFitWidth(size);
         imageView.relocate(randomX, 50);
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(MILLISECONDS_PER_STEP), e-> {
-            step();
-            if (checkOutOfBounds()) {
-                road.removeEntityFromRoad(this);
-            }
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
     }
     
     public String getEntityType() {
@@ -61,7 +48,6 @@ public abstract class Entity {
         this.location = location;
 
     }
-
     public int getHealth() {
         return health;
     }
@@ -77,7 +63,7 @@ public abstract class Entity {
         imageView.relocate(imageViewX, imageViewY);
     }
 
-    private boolean checkOutOfBounds() {        //remove zombies if they get too far (actually remove them in Road)
+    public boolean checkOutOfBounds() {        //remove zombies if they get too far (actually remove them in Road)
         boolean outOfBounds = false;
         if (location.getY() > Road.ROAD_WIDTH_HEIGHT) {
             outOfBounds = true;
